@@ -4,7 +4,7 @@ import gevent
 from gevent.event import Event
 
 from ws4py.server.geventserver import WSGIHandler
-from ws4py.server.wsgi.middleware import WebSocketUpgradeMiddleware
+# from ws4py.server.wsgi.middleware import WebSocketUpgradeMiddleware
 from ws4py.websocket import WebSocket
 
 from . import common
@@ -44,8 +44,8 @@ class SimpleWebSocketServer(gevent.pywsgi.WSGIServer):
         self.opts = opts
         self.iohelper = common.StdioPipedWebSocketHelper(self.shutdown_cond, opts)
 
-        self.ws_upgrade = WebSocketUpgradeMiddleware(app=self.ws_handler,
-                websocket_class=StdioPipedWebSocket)
+        # self.ws_upgrade = WebSocketUpgradeMiddleware(app=self.ws_handler,
+        #         websocket_class=StdioPipedWebSocket)
 
     def __call__(self, environ, start_response):
         request_path = environ['PATH_INFO']
@@ -56,7 +56,8 @@ class SimpleWebSocketServer(gevent.pywsgi.WSGIServer):
             return ['']
         else:
             # Hand-off the WebSocket upgrade negotiation to ws4py...
-            return self.ws_upgrade(environ, start_response)
+            # return self.ws_upgrade(environ, start_response)
+            pass
 
     def ws_handler(self, websocket):
         # Stop accepting new connections after we receive our first one (a la
