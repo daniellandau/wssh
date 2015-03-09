@@ -3,7 +3,7 @@ import sys
 import gevent
 from gevent.event import Event
 
-from ws4py.server.geventserver import UpgradableWSGIHandler
+from ws4py.server.geventserver import WSGIHandler
 from ws4py.server.wsgi.middleware import WebSocketUpgradeMiddleware
 from ws4py.websocket import WebSocket
 
@@ -30,7 +30,7 @@ class StdioPipedWebSocket(WebSocket):
 # Simple HTTP server implementing only one endpoint which upgrades to the
 # stdin/stdout connected WebSocket.
 class SimpleWebSocketServer(gevent.pywsgi.WSGIServer):
-    handler_class = UpgradableWSGIHandler
+    handler_class = WSGIHandler
 
     def __init__(self, host, port, path, opts):
         gevent.pywsgi.WSGIServer.__init__(self, (host, port), log=None)
